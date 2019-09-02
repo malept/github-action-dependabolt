@@ -4,7 +4,7 @@ set +e
 set +x
 
 if test -z "$GIT_COMMIT_EMAIL"; then
-    GIT_COMMIT_EMAIL="$GITHUB_ACTOR@noreply.users.github.com"
+    GIT_COMMIT_EMAIL="$GITHUB_ACTOR@users.noreply.github.com"
 fi
 
 if test -z "$GIT_COMMIT_USER"; then
