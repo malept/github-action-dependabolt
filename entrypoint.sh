@@ -13,7 +13,6 @@ fi
 
 packageandversion=$(git show --pretty=format: --unified=0 HEAD package.json | grep '^+ ' | sed --regexp-extended --expression 's#^\+ +"(.*)": "(.*)",?#\1@\2#g')
 
-npx bolt
 npx bolt upgrade "$packageandversion"
 
 echo "machine github.com login $GITHUB_ACTOR password $GITHUB_TOKEN" > ~/.netrc
