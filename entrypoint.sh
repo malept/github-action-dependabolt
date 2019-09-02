@@ -3,6 +3,11 @@
 set +e
 set +x
 
+if ! echo "$GITHUB_REF" | grep -q ^refs/heads/dependabot/; then
+    echo 'Not a dependabot PR, skipping'
+    exit 0 # Exit with success because the red X looks bad
+fi
+
 if test -z "$GIT_COMMIT_EMAIL"; then
     GIT_COMMIT_EMAIL="$GITHUB_ACTOR@users.noreply.github.com"
 fi
