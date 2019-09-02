@@ -1,6 +1,6 @@
 FROM debian:buster
 LABEL "com.github.actions.name"="Dependabolt"
-LABEL "com.github.actions.description"="Support Dependabot + Bolt"
+LABEL "com.github.actions.description"="Make sure all packages in a bolt-managed monorepo are updated via Dependabot"
 LABEL "com.github.actions.icon"="package"
 LABEL "com.github.actions.color"="gray-dark"
 LABEL "repository"="https://github.com/malept/github-action-dependabolt"
