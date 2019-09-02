@@ -23,4 +23,4 @@ git add .
 git config user.name "$GITHUB_ACTOR"
 git config user.email "$GIT_COMMIT_EMAIL"
 git commit $GIT_COMMIT_FLAGS -m "Finish upgrading via bolt"
-git push
+git push origin HEAD:$GITHUB_REF
