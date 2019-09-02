@@ -30,3 +30,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+In a production setting, `master` should be a tagged version (e.g., `v1.0.0`).
+
+## Docker Hub
+
+Alternatively, `uses` can be `docker://malept/gha-dependabolt:VERSION` where VERSION is `latest`
+(same as `master`) or a tagged version, minus the leading `v` (example:
+`docker://malept/gha-dependabolt:1.0.0`). This can speed up your workflow.
