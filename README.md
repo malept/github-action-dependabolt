@@ -3,12 +3,16 @@
 A GitHub Action to make sure all packages in a [`bolt`](http://boltpkg.com/)-managed monorepo are
 updated in a Dependabot-generated pull request.
 
-## Environment variables
+## Inputs
 
-* `GIT_COMMIT_EMAIL` the email to use when committing to the repository, defaults to the repository
+* `gitCommitEmail`: The email to use when committing to the repository, defaults to the repository
   owner's fake GitHub email.
-* `GIT_COMMIT_USER` - `git config user.name`, defaults to the repository owner.
-* `GIT_COMMIT_FLAGS` - any extra `git commit` flags to pass, such as `--no-verify`.
+* `gitCommitFlags`: Any extra `git commit` flags to pass, such as `--no-verify`.
+* `gitCommitUser`: The value to set `git config user.name`, defaults to the repository owner.
+
+## Secrets used
+
+This action uses `GITHUB_TOKEN` to push the commit back up to the repository.
 
 ## Example workflow
 
@@ -26,6 +30,8 @@ jobs:
       uses: actions/checkout@v1
     - name: Run dependabolt
       uses: malept/github-action-dependabolt@master
+      with:
+        gitCommitUser: Dependabolt Bot
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```

@@ -1,0 +1,19 @@
+name: Dependabolt
+description: Make sure all packages in a bolt-managed monorepo are updated via Dependabot
+branding:
+  icon: package
+  color: gray-dark
+inputs:
+  gitCommitEmail:
+    description: The email to use when committing to the repository, defaults to the repository
+  owner's fake GitHub email.
+    required: false
+    default: ''
+  gitCommitFlags:
+    description: 'Any extra `git commit` flags to pass, such as `--no-verify`.'
+    default: ''
+    required: false
+  gitCommitUser:
+    description: 'The value to set `git config user.name`, defaults to the repository owner.'
+    required: false
+image: Dockerfile
