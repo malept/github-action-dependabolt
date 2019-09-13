@@ -5,8 +5,7 @@ branding:
   color: gray-dark
 inputs:
   gitCommitEmail:
-    description: The email to use when committing to the repository, defaults to the repository
-  owner's fake GitHub email.
+    description: The email to use when committing to the repository, defaults to the repository owner's fake GitHub email.
     required: false
     default: ''
   gitCommitFlags:
