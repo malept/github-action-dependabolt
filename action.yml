@@ -1,5 +1,5 @@
-name: Dependabolt
-description: Make sure all packages in a bolt-managed monorepo are updated via Dependabot
+name: Dependa-bolt
+description: Make sure all packages in a bolt-managed monorepo are updated via Dependabot (not affiliated with Dependabot or bolt)
 branding:
   icon: package
   color: gray-dark
