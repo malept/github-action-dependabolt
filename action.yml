@@ -15,4 +15,6 @@ inputs:
   gitCommitUser:
     description: 'The value to set `git config user.name`, defaults to the repository owner.'
     required: false
-image: Dockerfile
+runs:
+  using: docker
+  image: Dockerfile
