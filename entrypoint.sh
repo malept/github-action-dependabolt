@@ -1,7 +1,7 @@
 #!/bin/sh
 
-set +e
-set +x
+set -e
+set -x
 
 if ! echo "$GITHUB_REF" | grep -q ^refs/heads/dependabot/; then
     echo 'Not a dependabot PR, skipping'
