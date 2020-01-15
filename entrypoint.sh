@@ -18,6 +18,14 @@ if test -z "$INPUT_GITCOMMITUSER"; then
     INPUT_GITCOMMITUSER="$GITHUB_ACTOR"
 fi
 
+if test -n "$GITHUB_HEAD_REF"; then
+    git fetch origin "$GITHUB_HEAD_REF"
+    git checkout "$GITHUB_HEAD_REF"
+    UPSTREAM_BRANCH="$GITHUB_HEAD_REF"
+else
+    UPSTREAM_BRANCH="$GITHUB_REF"
+fi
+
 packageandversion=$(git show --pretty=format: --unified=0 HEAD package.json | grep '^+ ' | sed --regexp-extended --expression 's#^\+ +"(.*)": "(.*)",?#\1@\2#g')
 
 if test -z "$packageandversion"; then
@@ -43,4 +51,4 @@ else
     chmod 600 ~/.netrc
 fi
 
-GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key" git push origin HEAD:$GITHUB_REF
+GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key" git push origin HEAD:$UPSTREAM_BRANCH
