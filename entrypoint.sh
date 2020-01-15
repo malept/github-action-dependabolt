@@ -4,8 +4,10 @@ set -e
 set -x
 
 if ! echo "$GITHUB_REF" | grep -q ^refs/heads/dependabot/; then
-    echo 'Not a dependabot PR, skipping'
-    exit 0 # Exit with success because the red X looks bad
+    if ! echo "$GITHUB_HEAD_REF" | grep -q ^dependabot/; then
+        echo 'Not a dependabot branch or PR, skipping'
+        exit 0 # Exit with success because the red X looks bad
+    fi
 fi
 
 if test -z "$INPUT_GITCOMMITEMAIL"; then
