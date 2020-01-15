@@ -12,7 +12,12 @@ updated in a Dependabot-generated pull request.
 
 ## Secrets used
 
-This action uses `GITHUB_TOKEN` to push the commit back up to the repository.
+This action uses one of two methods to push the commit back up to the repository:
+
+* If `DEPENDABOLT_SSH_DEPLOY_KEY` is specified in the repository secrets, it is used to push the
+  commit back to the repository's SSH endpoint.
+* Otherwise, `GITHUB_TOKEN` is used to push the commit back to the repository's HTTPS endpoint. This
+  currently only works with private repositories. See the [GitHub Actions forum post](https://github.community/t5/GitHub-Actions/Github-action-not-triggering-gh-pages-upon-push/td-p/26869) for details.
 
 ## Example workflow
 
