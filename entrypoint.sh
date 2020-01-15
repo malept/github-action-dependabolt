@@ -18,6 +18,10 @@ fi
 
 packageandversion=$(git show --pretty=format: --unified=0 HEAD package.json | grep '^+ ' | sed --regexp-extended --expression 's#^\+ +"(.*)": "(.*)",?#\1@\2#g')
 
+if test -z "$packageandversion"; then
+    echo "No upgraded packages found" 1>&2
+    exit 0
+fi
 npx bolt upgrade "$packageandversion"
 
 git add .
