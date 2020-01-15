@@ -20,11 +20,21 @@ packageandversion=$(git show --pretty=format: --unified=0 HEAD package.json | gr
 
 npx bolt upgrade "$packageandversion"
 
-echo "machine github.com login $GITHUB_ACTOR password $GITHUB_TOKEN" > ~/.netrc
-chmod 600 ~/.netrc
-
 git add .
 git config user.name "$GITHUB_ACTOR"
 git config user.email "$INPUT_GITCOMMITEMAIL"
 git commit $INPUT_GITCOMMITFLAGS -m "Finish upgrading via bolt"
-git push origin HEAD:$GITHUB_REF
+
+if test -n "$DEPENDABOLT_SSH_DEPLOY_KEY"; then
+    mkdir ~/.ssh
+    echo "$DEPENDABOLT_SSH_DEPLOY_KEY" > ~/.ssh/deploy_key
+    chmod 400 ~/.ssh/deploy_key
+
+    git remote rm origin
+    git remote add origin "git@github.com:$GITHUB_REPOSITORY.git"
+else
+    echo "machine github.com login $GITHUB_ACTOR password $GITHUB_TOKEN" > ~/.netrc
+    chmod 600 ~/.netrc
+fi
+
+GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key" git push origin HEAD:$GITHUB_REF
