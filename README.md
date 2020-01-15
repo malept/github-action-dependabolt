@@ -43,6 +43,11 @@ jobs:
 
 In a production setting, `master` should be a tagged version (e.g., `v1.0.0`).
 
+## Debugging
+
+If you need to debug the `entrypoint.sh` script, you can set the `DEPENDABOLT_DEBUG` environment
+variable, which sets `-x` in the shell script.
+
 ## Docker Hub
 
 Alternatively, `uses` can be `docker://malept/gha-dependabolt:VERSION` where VERSION is `latest`

@@ -1,7 +1,10 @@
 #!/bin/sh
 
 set -e
-set -x
+
+if test -n "$DEPENDABOLT_DEBUG"; then
+    set -x
+fi
 
 if ! echo "$GITHUB_REF" | grep -q ^refs/heads/dependabot/; then
     if ! echo "$GITHUB_HEAD_REF" | grep -q ^dependabot/; then
