@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: docker build -t action
+      - run: docker build -t action .
       - name: Push to GitHub Packages
         if: startsWith(github.ref, 'refs/tags/v')
         run: |
