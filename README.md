@@ -34,14 +34,14 @@ jobs:
       if: github.event.ref_type == 'branch' && startsWith(github.event.ref, 'dependabot/')
       uses: actions/checkout@v1
     - name: Run dependabolt
-      uses: malept/github-action-dependabolt@master
+      uses: malept/github-action-dependabolt@main
       with:
         gitCommitUser: Dependabolt Bot
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-In a production setting, `master` should be a tagged version (e.g., `v1.0.0`).
+In a production setting, `main` should be a tagged version (e.g., `v1.0.0`).
 
 ## Debugging
 
@@ -51,5 +51,5 @@ variable, which sets `-x` in the shell script.
 ## Docker Hub
 
 Alternatively, `uses` can be `docker://malept/gha-dependabolt:VERSION` where VERSION is `latest`
-(same as `master`) or a tagged version, minus the leading `v` (example:
+(same as `main`) or a tagged version, minus the leading `v` (example:
 `docker://malept/gha-dependabolt:1.0.0`). This can speed up your workflow.
