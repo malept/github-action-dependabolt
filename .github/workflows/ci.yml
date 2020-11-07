@@ -9,16 +9,16 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build Docker Image
         run: docker build -t action .
-      - name: GitHub Packages Login (Tags Only)
-        if: startsWith(github.ref, 'refs/tags/v')
+      - name: GitHub Packages Login (main/tags only)
+        if: startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/head/main')
         uses: azure/docker-login@v1
         with:
           login-server: docker.pkg.github.com
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Push to GitHub Packages (Tags Only)
-        if: startsWith(github.ref, 'refs/tags/v')
+        - name: Push to GitHub Packages (main/tags only)
+        if: startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/head/main')
         run: |
-          TAG=docker.pkg.github.com/$GITHUB_REPOSITORY/action:$(echo $GITHUB_REF | sed -e 's:refs/\(head\|tag\)s/::g')
+          TAG=docker.pkg.github.com/$GITHUB_REPOSITORY/action:$(echo $GITHUB_REF | sed -e 's:refs/\(head\|tag\)s/::g' -e 's:^main$:latest:g')
           docker tag action "$TAG"
           docker push "$TAG"
