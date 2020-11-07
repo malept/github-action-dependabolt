@@ -8,23 +8,32 @@ on:
       - v[0-9]+.[0-9]+.[0-9]+*
   pull_request:
 
+env:
+  IMAGE_NAME: action
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Build Docker Image
-        run: docker build -t action .
+        run: docker build -t $IMAGE_NAME .
       - name: GitHub Packages Login (main/tags only)
-        if: startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/head/main')
-        uses: azure/docker-login@v1
-        with:
-          login-server: docker.pkg.github.com
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-        - name: Push to GitHub Packages (main/tags only)
-        if: startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/head/main')
+        if: github.event_name == 'push'
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      - name: Push to GitHub Packages (main/tags only)
+        if: github.event_name == 'push'
         run: |
-          TAG=docker.pkg.github.com/$GITHUB_REPOSITORY/action:$(echo $GITHUB_REF | sed -e 's:refs/\(head\|tag\)s/::g' -e 's:^main$:latest:g')
-          docker tag action "$TAG"
-          docker push "$TAG"
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "main" ] && VERSION=latest
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
