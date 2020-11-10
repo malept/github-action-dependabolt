@@ -50,7 +50,6 @@ variable, which sets `-x` in the shell script.
 
 ## Docker Hub
 
-Alternatively, `uses` can be `docker://docker.pkg.github.com/malept/github-action-dependabolt/action:VERSION`,
+Alternatively, `uses` can be `docker://ghcr.io/malept/dependabolt-action:VERSION`,
 where VERSION is `latest` (same as `main`) or a tagged version, minus the leading `v` (example:
-`docker://docker.pkg.github.com/malept/github-action-dependabolt/action:2.1.2`). This can speed up
-your workflow.
+`docker://ghcr.io/malept/dependabolt-action:2.1.3`). This can speed up your workflow.
