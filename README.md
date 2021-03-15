@@ -12,12 +12,8 @@ updated in a Dependabot-generated pull request.
 
 ## Secrets used
 
-This action uses one of two methods to push the commit back up to the repository:
-
-* If `DEPENDABOLT_SSH_DEPLOY_KEY` is specified in the repository secrets, it is used to push the
-  commit back to the repository's SSH endpoint.
-* Otherwise, `GITHUB_TOKEN` is used to push the commit back to the repository's HTTPS endpoint. This
-  currently only works with private repositories. See the [GitHub Actions forum post](https://github.community/t5/GitHub-Actions/Github-action-not-triggering-gh-pages-upon-push/td-p/26869) for details.
+This action uses an SSH deploy key with write permissions to push the commit back up to the repository.
+Specify `DEPENDABOLT_SSH_DEPLOY_KEY` in the repository secrets (the private key).
 
 ## Example workflow
 
@@ -38,7 +34,7 @@ jobs:
       with:
         gitCommitUser: Dependabolt Bot
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEPENDABOLT_SSH_DEPLOY_KEY: ${{ secrets.DEPENDABOLT_SSH_DEPLOY_KEY }}
 ```
 
 In a production setting, `main` should be a tagged version (e.g., `v1.0.0`).

@@ -13,6 +13,11 @@ if ! echo "$GITHUB_REF" | grep -q ^refs/heads/dependabot/; then
     fi
 fi
 
+if test -z "$DEPENDABOLT_SSH_DEPLOY_KEY"; then
+  echo "ERROR: Please set the DEPENDABOLT_SSH_DEPLOY_KEY environment variable." 1>&2
+  exit 1
+fi
+
 if test -z "$INPUT_GITCOMMITEMAIL"; then
     INPUT_GITCOMMITEMAIL="$GITHUB_ACTOR@users.noreply.github.com"
 fi
@@ -44,17 +49,12 @@ if test -n "$(git status -s)"; then
     git config user.email "$INPUT_GITCOMMITEMAIL"
     git commit $INPUT_GITCOMMITFLAGS -m "Finish upgrading via bolt"
 
-    if test -n "$DEPENDABOLT_SSH_DEPLOY_KEY"; then
-        mkdir ~/.ssh
-        echo "$DEPENDABOLT_SSH_DEPLOY_KEY" > ~/.ssh/deploy_key
-        chmod 400 ~/.ssh/deploy_key
+      mkdir ~/.ssh
+      echo "$DEPENDABOLT_SSH_DEPLOY_KEY" > ~/.ssh/deploy_key
+      chmod 400 ~/.ssh/deploy_key
 
-        git remote rm origin
-        git remote add origin "git@github.com:$GITHUB_REPOSITORY.git"
-    else
-        echo "machine github.com login $GITHUB_ACTOR password $GITHUB_TOKEN" > ~/.netrc
-        chmod 600 ~/.netrc
-    fi
+      git remote rm origin
+      git remote add origin "git@github.com:$GITHUB_REPOSITORY.git"
 
     GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key" git push origin HEAD:$UPSTREAM_BRANCH
 else
