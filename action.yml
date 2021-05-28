@@ -16,5 +16,8 @@ inputs:
     description: 'The value to set `git config user.name`, defaults to the repository owner.'
     required: false
 runs:
-  using: docker
-  image: Dockerfile
+  using: composite
+  steps:
+    name: Run Dependabolt
+    shell: bash
+    run: $GITHUB_ACTION_PATH/entrypoint.sh
