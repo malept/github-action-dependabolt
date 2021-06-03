@@ -20,7 +20,7 @@ runs:
   steps:
     - name: Run Dependabolt
       shell: bash
-      run: $GITHUB_ACTION_PATH/entrypoint.sh
+      run: $GITHUB_ACTION_PATH/dependabolt.sh
       env:
         DEPENDABOLT_SSH_DEPLOY_KEY: ${{ secrets.DEPENDABOLT_SSH_DEPLOY_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
