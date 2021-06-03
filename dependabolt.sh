@@ -18,12 +18,12 @@ if test -z "$DEPENDABOLT_SSH_DEPLOY_KEY"; then
   exit 1
 fi
 
-if test -z "$INPUT_GITCOMMITEMAIL"; then
-    INPUT_GITCOMMITEMAIL="$GITHUB_ACTOR@users.noreply.github.com"
+if test -z "$GIT_COMMIT_EMAIL"; then
+    GIT_COMMIT_EMAIL="$GITHUB_ACTOR@users.noreply.github.com"
 fi
 
-if test -z "$INPUT_GITCOMMITUSER"; then
-    INPUT_GITCOMMITUSER="$GITHUB_ACTOR"
+if test -z "$GIT_COMMIT_USER"; then
+    GIT_COMMIT_USER="$GITHUB_ACTOR"
 fi
 
 if test -n "$GITHUB_HEAD_REF"; then
@@ -46,8 +46,8 @@ git add .
 
 if test -n "$(git status -s)"; then
     git config user.name "$GITHUB_ACTOR"
-    git config user.email "$INPUT_GITCOMMITEMAIL"
-    git commit $INPUT_GITCOMMITFLAGS -m "Finish upgrading via bolt"
+    git config user.email "$GIT_COMMIT_EMAIL"
+    git commit $GIT_COMMIT_FLAGS -m "Finish upgrading via bolt"
 
       mkdir ~/.ssh
       echo "$DEPENDABOLT_SSH_DEPLOY_KEY" > ~/.ssh/deploy_key

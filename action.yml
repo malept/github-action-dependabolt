@@ -22,5 +22,9 @@ runs:
       shell: bash
       run: $GITHUB_ACTION_PATH/dependabolt.sh
       env:
-        DEPENDABOLT_SSH_DEPLOY_KEY: ${{ secrets.DEPENDABOLT_SSH_DEPLOY_KEY }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEPENDABOLT_DEBUG: ${{ env.DEPENDABOLT_DEBUG }}
+        DEPENDABOLT_SSH_DEPLOY_KEY: ${{ env.DEPENDABOLT_SSH_DEPLOY_KEY }}
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        GIT_COMMIT_EMAIL: ${{ inputs.gitCommitEmail }}
+        GIT_COMMIT_FLAGS: ${{ inputs.gitCommitFlags }}
+        GIT_COMMIT_USER: ${{ inputs.gitCommitUser }}
